@@ -21,6 +21,18 @@ namespace TenmoServer.Controllers
             this.userDao = userDao;
         }
 
+        [HttpGet("/")]
+
+        public ActionResult<string> Ready()
+        {
+            return Ok("the server is ready");
+
+        }
+
+
+
+
+
         [HttpPost]
         public IActionResult Authenticate(LoginUser userParam)
         {
@@ -98,5 +110,12 @@ namespace TenmoServer.Controllers
 
             return result;
         }
+
+         
+
+
     }
+
+
+    
 }

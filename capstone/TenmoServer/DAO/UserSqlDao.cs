@@ -150,6 +150,9 @@ namespace TenmoServer.DAO
             return newUser;
         }
 
+        
+
+
         private User MapRowToUser(SqlDataReader reader)
         {
             User user = new User();
@@ -159,5 +162,7 @@ namespace TenmoServer.DAO
             user.Salt = Convert.ToString(reader["salt"]);
             return user;
         }
+
+
     }
 }
