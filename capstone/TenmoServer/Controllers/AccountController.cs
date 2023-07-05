@@ -9,23 +9,25 @@ namespace TenmoServer.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountDao accountDao; 
-        public AccountController (IAccountDao accountDao )
+        private readonly IAccountDao accountDao;
+        private readonly IUserDao userDao;
+        public AccountController(IAccountDao accountDao, IUserDao userDao)
         {
-            this.accountDao = accountDao; 
-
+            this.accountDao = accountDao;
+            this.userDao = userDao;
         }
 
-        [HttpGet("{username}")]
+        [HttpGet()]
       
-        public ActionResult<decimal> GetAccountBalanceByName(string username)
+        public ActionResult<Account> GetAccountBalanceByName()
         {
+            User user = userDao.GetUserByUsername(User.Identity.Name); 
 
-            decimal balance = accountDao.GetBalanceByUsername(username);
+            Account account = accountDao.GetBalanceByUsername(user.Username);
 
-            if (username != null)
-            {
-                return Ok(balance);
+            if (account != null)
+            { 
+                return Ok(account);
             }
             else
             {

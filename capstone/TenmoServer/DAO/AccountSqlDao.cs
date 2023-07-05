@@ -16,7 +16,7 @@ namespace TenmoServer.DAO
         }
 
 
-        public decimal GetBalanceByUsername(string username)
+        public Account GetBalanceByUsername(string username)
         {
 
             string sql = "SELECT balance, account_id, account.user_id, username FROM account " +
@@ -43,7 +43,7 @@ namespace TenmoServer.DAO
 
                 }
 
-                return account.Balance; 
+                return account; 
 
             }
 

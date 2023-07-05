@@ -1,5 +1,7 @@
 ﻿using RestSharp;
+using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using TenmoClient.Models;
 
 namespace TenmoClient.Services
@@ -12,6 +14,18 @@ namespace TenmoClient.Services
 
         // Add methods to call api here...
 
+        public decimal GetBalanceByUsername()
+        {
+        
 
+            RestRequest request = new RestRequest("account");
+            IRestResponse<Account> response = client.Get<Account>(request);
+
+            decimal currentBalance = response.Data.Balance;
+            return currentBalance;
+           
+
+        }
+          
     }
 }
