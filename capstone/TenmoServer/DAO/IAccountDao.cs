@@ -7,7 +7,6 @@ namespace TenmoServer.DAO
 
         Account GetAccountBalanceById(int id);
         Account AddFundsFromBalance(decimal fundsToAdd);
-
         Account RemoveFundsFromBalance(decimal fundsToRemove);
 
 

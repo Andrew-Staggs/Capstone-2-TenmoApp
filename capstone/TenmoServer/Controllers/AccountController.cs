@@ -18,29 +18,22 @@ namespace TenmoServer.Controllers
 
         [HttpGet("{id}")]
       
-        public IActionResult GetAccountBalanceById(int id)
+        public ActionResult<Account> GetAccountBalanceById(int id)
         {
 
-            //get current user info below
+            Account balance = accountDao.GetAccountBalanceById(id);
 
-            try
+            if (balance != null)
             {
-                Account account = new Account(;
-
-                account.Balance = accountDao.GetAccountBalanceById(id);
-
-                currentUser.
-
-                }
-
-
-            catch ()
-
-            {
-
-
-
+                return Ok(balance);
             }
+            else
+            {
+                return NotFound();
+            }
+
+                
+
 
 
 
@@ -55,4 +48,4 @@ namespace TenmoServer.Controllers
 
 
     }
-}
+
