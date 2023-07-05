@@ -16,14 +16,14 @@ namespace TenmoServer.Controllers
 
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{username}")]
       
-        public ActionResult<Account> GetAccountBalanceById(int id)
+        public ActionResult<decimal> GetAccountBalanceByName(string username)
         {
 
-            Account balance = accountDao.GetAccountBalanceById(id);
+            decimal balance = accountDao.GetBalanceByUsername(username);
 
-            if (balance != null)
+            if (username != null)
             {
                 return Ok(balance);
             }

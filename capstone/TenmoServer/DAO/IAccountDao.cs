@@ -5,9 +5,10 @@ namespace TenmoServer.DAO
     public interface IAccountDao
     {
 
-        Account GetAccountBalanceById(int id);
+        decimal GetBalanceByUsername(string username);
         Account AddFundsFromBalance(decimal fundsToAdd);
         Account RemoveFundsFromBalance(decimal fundsToRemove);
+
 
 
     }
