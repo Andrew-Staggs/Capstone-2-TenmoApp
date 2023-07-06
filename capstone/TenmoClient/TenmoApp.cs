@@ -74,8 +74,8 @@ namespace TenmoClient
             if (menuSelection == 1)
             {
 
-               decimal balance = tenmoApiService.GetBalanceByUsername();
-                Console.WriteLine($"Current Balance: {balance}"); 
+                PrintCurrentBalance();
+              
             }
 
             if (menuSelection == 2)
@@ -91,6 +91,8 @@ namespace TenmoClient
             if (menuSelection == 4)
             {
                 // Send TE bucks
+                GetUsers();
+
             }
 
             if (menuSelection == 5)
@@ -159,6 +161,31 @@ namespace TenmoClient
                 console.PrintError("Registration was unsuccessful.");
             }
             console.Pause();
+        }
+
+        private void PrintCurrentBalance()
+        {
+
+           decimal balance = tenmoApiService.GetBalanceByUsername();
+            Console.WriteLine($"The current Balance is:{balance:C}");
+            console.Pause();
+
+        }
+
+        private void GetUsers()
+
+        {
+            List<ApiUser> users = tenmoApiService.GetUsers();
+            Console.WriteLine($"_____");
+            const int margin = -10;
+
+            foreach (ApiUser user in users)
+            {
+                Console.WriteLine($"{user.UserId,margin} | {user.Username,margin}");
+            }
+            console.Pause();
+
+
         }
     }
 }

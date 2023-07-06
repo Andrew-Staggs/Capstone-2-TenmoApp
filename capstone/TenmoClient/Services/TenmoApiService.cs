@@ -26,6 +26,15 @@ namespace TenmoClient.Services
            
 
         }
+
+        public List<ApiUser> GetUsers()
+        {
+            RestRequest request = new RestRequest("transfer");
+
+            IRestResponse<List<ApiUser>> response = client.Get<List<ApiUser>>(request);
+            List<ApiUser> users = response.Data;
+            return users; 
+        }
           
     }
 }
