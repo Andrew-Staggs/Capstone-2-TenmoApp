@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Security.Cryptography.Xml;
 using System.Security.Principal;
 using TenmoServer.Models;
 
@@ -16,7 +17,7 @@ namespace TenmoServer.DAO
         }
 
 
-        public Account GetBalanceByUsername(string username)
+        public Account GetBalance(string username)
         {
 
             string sql = "SELECT balance, account_id, account.user_id, username FROM account " +
@@ -49,6 +50,61 @@ namespace TenmoServer.DAO
 
 
         }
+
+
+        public void UpdateBalanceReceived(Transfer transfer)
+        {
+            string sql = "UPDATE account SET balance = (balance + @amount)" +
+                          "FROM account " +
+                           "WHERE account_id = @account_to;";
+
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@amount", transfer.Amount);
+                    cmd.Parameters.AddWithValue("@account_to", transfer.Account_To);
+
+                   cmd.ExecuteScalar();
+                }
+              
+            }
+
+
+        }
+
+
+        public Account UpdateBalanceSent(Transfer transfer, string username)
+        {
+            string sql = "UPDATE account SET balance = (balance - @amount)" +
+                          "FROM account " +
+                            "WHERE account_id = @account_from;";
+
+
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@amount", transfer.Amount);
+                    cmd.Parameters.AddWithValue("@account_from", transfer.Account_From);
+                    cmd.ExecuteScalar();
+
+                }
+               
+              
+
+            }
+            return GetBalance(username);
+
+
+        }
+
 
 
         public Account AddFundsFromBalance(decimal fundsToAdd)

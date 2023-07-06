@@ -19,11 +19,11 @@ namespace TenmoServer.Controllers
 
         [HttpGet()]
 
-        public ActionResult<Account> GetAccountBalanceByName()
+        public ActionResult<Account> GetBalance()
         {
             User user = userDao.GetUserByUsername(User.Identity.Name);
 
-            Account account = accountDao.GetBalanceByUsername(user.Username);
+            Account account = accountDao.GetBalance(user.Username);
 
             if (account != null)
             {
@@ -36,11 +36,23 @@ namespace TenmoServer.Controllers
         }
 
 
+        [HttpPut()]
+
+        public ActionResult<Account> UpdateBalance(Transfer transfer)
+        {
+          
+
+            accountDao.UpdateBalanceReceived(transfer);
+         Account accountReturned = accountDao.UpdateBalanceSent(transfer, User.Identity.Name);
+
+            return accountReturned;
+
+        }
 
     }
 
 
 
 
-    }
+}
 

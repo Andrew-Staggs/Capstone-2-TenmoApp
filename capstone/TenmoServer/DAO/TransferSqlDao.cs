@@ -16,42 +16,8 @@ namespace TenmoServer.DAO
 
         }
 
-        public List<Transfer> UpdateBalance(int user_id)
-        {
-            string sql = "UPDATE account SET balance = " +
-             
-               "WHERE user_id = @user_id;";
-
-            List<Transfer> transferRecipients = new List<Transfer>();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@user_name", username);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        Transfer transfer = new Transfer();
-
-                        transfer = MapRowToTransfer(reader);
-                        transferRecipients.Add(transfer);
-                    }
-                   
-
-                }
-                return transferRecipients;
-
-
-            }
-
-
-        }
-      
-
+       
+        // create method to add row to table. Called 
         private Transfer MapRowToTransfer(SqlDataReader reader)
         {
             Transfer transfer = new Transfer();

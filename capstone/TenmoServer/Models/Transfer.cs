@@ -12,16 +12,18 @@ namespace TenmoServer.Models
         public decimal Amount { get; set; }
 
         public int Transfer_Status_Id { get; set; }
+
+
         public Transfer()
 
         {
 
         }
 
-        public Transfer(int transfer_id, int transfer_type_id, int account_from, int account_to, decimal amount, int transfer_status_id)
+        public Transfer(int transfer_type_id, int account_from, int account_to, decimal amount, int transfer_status_id)
 
         {
-            Transfer_Id = transfer_id;
+           
             Transfer_Type_Id = transfer_type_id;
             Account_From = account_from;
             Account_To = account_to;

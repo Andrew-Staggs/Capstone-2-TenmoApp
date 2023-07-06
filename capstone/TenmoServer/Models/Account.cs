@@ -4,11 +4,9 @@
     {
         public int Account_Id { get; set; } 
         public int User_Id { get; set; }
-        public decimal Balance { get; set; } = 1000M;
+        public decimal Balance { get; set; }
 
-        
-
-
+         
         public Account()
         {
 

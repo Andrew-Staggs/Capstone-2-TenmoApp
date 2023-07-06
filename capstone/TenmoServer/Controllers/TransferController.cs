@@ -42,26 +42,8 @@ namespace TenmoServer.Controllers
         }
 
 
-        //first get user by user ID :
 
-        //[HttpGet("")
-        //public ActionResult<User> 
-
-
-
-
-
-        //then need to update current user balance:
-
-        //[HttpPut("{Balance}")]
-
-        //public ActionResult<Account> RemoveFundsFromUserBalance(int id)
-        //{
-
-        //    userDao.GetUserById()
-
-        //}  
-
+       
 
     }
 }
