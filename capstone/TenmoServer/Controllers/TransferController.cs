@@ -27,6 +27,7 @@ namespace TenmoServer.Controllers
         {
            IList<User> users = userDao.GetUsers();
 
+
             if (users != null)
             {
                 return Ok(users);
@@ -38,10 +39,28 @@ namespace TenmoServer.Controllers
                 return NotFound();
 
             }
-
         }
 
 
+        //first get user by user ID :
+
+        //[HttpGet("")
+        //public ActionResult<User> 
+
+
+
+
+
+        //then need to update current user balance:
+
+        //[HttpPut("{Balance}")]
+
+        //public ActionResult<Account> RemoveFundsFromUserBalance(int id)
+        //{
+
+        //    userDao.GetUserById()
+
+        //}  
 
 
     }

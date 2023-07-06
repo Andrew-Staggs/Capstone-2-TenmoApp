@@ -18,29 +18,22 @@ namespace TenmoServer.Controllers
         }
 
         [HttpGet()]
-      
+
         public ActionResult<Account> GetAccountBalanceByName()
         {
-            User user = userDao.GetUserByUsername(User.Identity.Name); 
+            User user = userDao.GetUserByUsername(User.Identity.Name);
 
             Account account = accountDao.GetBalanceByUsername(user.Username);
 
             if (account != null)
-            { 
+            {
                 return Ok(account);
             }
             else
             {
                 return NotFound();
             }
-
-                
-
-
-
-
         }
-
 
 
 

@@ -33,6 +33,8 @@ namespace TenmoClient.Services
 
             IRestResponse<List<ApiUser>> response = client.Get<List<ApiUser>>(request);
             List<ApiUser> users = response.Data;
+
+            
             return users; 
         }
           

@@ -176,13 +176,18 @@ namespace TenmoClient
 
         {
             List<ApiUser> users = tenmoApiService.GetUsers();
-            Console.WriteLine($"_____");
+            Console.WriteLine($"__________USERS__________");
+            
             const int margin = -10;
-
+            string nameColumn = "id";
+            string usernameColumn = "Username";
+            Console.WriteLine($"{nameColumn, margin} | { usernameColumn, margin}");
+            Console.WriteLine($"_________________________"); 
             foreach (ApiUser user in users)
             {
                 Console.WriteLine($"{user.UserId,margin} | {user.Username,margin}");
             }
+            Console.WriteLine();
             console.Pause();
 
 

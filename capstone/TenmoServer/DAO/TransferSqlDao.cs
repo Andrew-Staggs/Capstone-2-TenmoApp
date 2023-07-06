@@ -16,11 +16,11 @@ namespace TenmoServer.DAO
 
         }
 
-        public List<Transfer> TransferMoneyToUser(string username)
+        public List<Transfer> UpdateBalance(int user_id)
         {
-            string sql = "SELECT tenmo_user.user_id, username FROM tenmo_user " +
-               "JOIN account ON account.user_id = tenmo_user.user_id " +
-               "WHERE username != @user_name;";
+            string sql = "UPDATE account SET balance = " +
+             
+               "WHERE user_id = @user_id;";
 
             List<Transfer> transferRecipients = new List<Transfer>();
 
