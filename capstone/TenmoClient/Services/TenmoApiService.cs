@@ -37,6 +37,30 @@ namespace TenmoClient.Services
             
             return users; 
         }
+
+        //method to receive user dollar amount:
+        public Transfer AmountToSendUser()
+        {
+            Transfer transfer = new Transfer(); 
+            string amountToSend = Console.ReadLine();
+            decimal amount = decimal.Parse(amountToSend);
+            transfer.Amount = amount; // adds amount user enteres to transfer object
+            return transfer; //returns transfer object with the amount to pass to the controller
+
+        }
+
+
+        public Transfer UserToSendTo()
+        {
+            Transfer transfer = new Transfer();
           
+            string idToSendTo = Console.ReadLine();
+            //get account to send funds to by ID. might need method.
+           
+            return transfer; //returns transfer object with the amount to pass to the controller
+
+        }
+
+
     }
 }

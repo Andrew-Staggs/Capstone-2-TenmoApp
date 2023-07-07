@@ -56,8 +56,8 @@ namespace TenmoClient.Services
 
 
         // Add application-specific UI methods here...
+       
 
-         
 
     }
 }
