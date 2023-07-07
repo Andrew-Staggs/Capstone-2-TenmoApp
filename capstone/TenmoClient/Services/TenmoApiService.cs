@@ -61,11 +61,14 @@ namespace TenmoClient.Services
 
         }
 
-        //public ApiUser GetUserById(int id)
-        //{
-        //    id = Convert.ToInt32(Console.ReadLine());
-
-        //}
+       public Transfer SendTransfer(Transfer transfer)
+        {
+            RestRequest request = new RestRequest("transfer");
+            request.AddJsonBody(transfer);
+            IRestResponse<Transfer> response = client.Post<Transfer>(request);
+            Transfer result = response.Data;
+            return result;
+        }
 
 
     }

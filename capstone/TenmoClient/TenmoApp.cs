@@ -93,8 +93,8 @@ namespace TenmoClient
                 // Send TE bucks
                 GetUsers();
 
-            PromptForUserId("are sending to");
-            tenmoApiService.AmountToSendUser();
+            Transfer transfer = PromptForUserIdAndAmount("");
+                tenmoApiService.SendTransfer(transfer);
 
                 
                 
@@ -200,21 +200,23 @@ namespace TenmoClient
 
         }
 
-        private void PromptForUserId(string message)
+
+        private Transfer PromptForUserIdAndAmount(string message)
         {
 
             Console.WriteLine($"Id of the User {message}: ");
             Console.WriteLine();
-           
-            
-        }
-
-       private void PromptForAmountToSend()
-        {
-
+            int userId = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine($"Enter the amount to send: ");
             Console.WriteLine();
-           
+            decimal amount = Convert.ToDecimal(Console.ReadLine());
+            Transfer transfer = new Transfer();
+            transfer.Account_To = userId;
+            transfer.Amount = amount;
+            return transfer; 
+
         }
+
+     
     }
 }
