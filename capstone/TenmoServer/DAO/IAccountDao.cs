@@ -9,6 +9,8 @@ namespace TenmoServer.DAO
         void UpdateBalanceReceived(Transfer transfer);
         Account UpdateBalanceSent(Transfer transfer, string username);
 
+        Account GetAccountIdByUserId(int userId);
+
 
 
     }

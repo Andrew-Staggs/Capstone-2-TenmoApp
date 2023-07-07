@@ -36,22 +36,23 @@ namespace TenmoServer.Controllers
         }
 
 
-        [HttpPut()]
 
-        public ActionResult<Account> UpdateBalance(Transfer transfer)
+        
+
+
+        [HttpGet("{userId}")]
+        public ActionResult<Account> GetAccoundIdByUserId(int userId)
         {
-          
 
-            accountDao.UpdateBalanceReceived(transfer);
-         Account accountReturned = accountDao.UpdateBalanceSent(transfer, User.Identity.Name);
+            Account account = accountDao.GetAccountIdByUserId(userId);
 
-            return accountReturned;
-
+            return account;
         }
 
+
+
+
     }
-
-
 
 
 }

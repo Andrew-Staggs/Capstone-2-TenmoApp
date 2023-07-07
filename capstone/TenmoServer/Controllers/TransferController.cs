@@ -18,14 +18,14 @@ namespace TenmoServer.Controllers
         {
             this.transferDao = transferDao;
             this.userDao = userDao;
-            this.accountDao = accountDao; 
+            this.accountDao = accountDao;
         }
 
-        [HttpGet()] 
+        [HttpGet()]
 
         public ActionResult<List<User>> DisplayUsers()
         {
-           IList<User> users = userDao.GetUsers();
+            IList<User> users = userDao.GetUsers();
 
 
             if (users != null)
@@ -41,9 +41,24 @@ namespace TenmoServer.Controllers
             }
         }
 
+        [HttpPost()]
+
+        public ActionResult<Transfer> TransferMoney(Transfer transfer)
+        {
+           Account account = accountDao.GetAccountIdByUserId(transfer.Account_To);
+            transfer.Account_To = account.Account_Id;
+            accountDao.UpdateBalanceReceived(transfer);
+            Account accountReturned = accountDao.UpdateBalanceSent(transfer, User.Identity.Name);
+            Transfer newTransfer = transferDao.InsertNewTransfer(transfer);
+            
+           
+
+            return newTransfer;
+
+        }
 
 
-       
+
 
     }
 }

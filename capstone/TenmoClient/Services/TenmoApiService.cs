@@ -61,6 +61,12 @@ namespace TenmoClient.Services
 
         }
 
+        //public ApiUser GetUserById(int id)
+        //{
+        //    id = Convert.ToInt32(Console.ReadLine());
+
+        //}
+
 
     }
 }

@@ -105,7 +105,40 @@ namespace TenmoServer.DAO
 
         }
 
+        public Account GetAccountIdByUserId(int userId) // takes in transfer.account_id which is the user_id
+        {
 
+            string sql = "SELECT account_id, user_id, balance FROM account  " +
+                         "WHERE user_id = @user_id; ";
+
+            Account account = new Account();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+
+                        account.Balance = Convert.ToDecimal(reader["balance"]);
+                        account.Account_Id = Convert.ToInt32(reader["account_id"]);
+                        account.User_Id = Convert.ToInt32(reader["user_id"]);
+                       
+                    }
+
+
+                }
+
+                return account;
+
+            }
+
+
+        }
 
         public Account AddFundsFromBalance(decimal fundsToAdd)
         {
@@ -132,7 +165,7 @@ namespace TenmoServer.DAO
             account.Account_Id = Convert.ToInt32(reader["account_id"]);
             account.User_Id = Convert.ToInt32(reader["user_id"]);
             account.Username = Convert.ToString(reader["username"]);
-            return account; 
+            return account;
 
         }
 
