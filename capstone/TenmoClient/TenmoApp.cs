@@ -92,6 +92,10 @@ namespace TenmoClient
             {
                 // Send TE bucks
                 GetUsers();
+
+            PromptForUserId("are sending to");
+            tenmoApiService.AmountToSendUser();
+
                 
                 
 
@@ -190,10 +194,6 @@ namespace TenmoClient
                 Console.WriteLine($"{user.UserId,margin} | {user.Username,margin}");
             }
             Console.WriteLine();
-
-            PromptForUserId("are sending to");
-            tenmoApiService.AmountToSendUser();
-
 
             console.Pause();
 
