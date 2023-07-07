@@ -213,6 +213,8 @@ namespace TenmoClient
             Transfer transfer = new Transfer();
             transfer.Account_To = userId;
             transfer.Amount = amount;
+            transfer.Account_From = tenmoApiService.UserId;
+            
             return transfer; 
 
         }

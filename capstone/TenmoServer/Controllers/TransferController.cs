@@ -46,7 +46,9 @@ namespace TenmoServer.Controllers
         public ActionResult<Transfer> TransferMoney(Transfer transfer)
         {
            Account account = accountDao.GetAccountIdByUserId(transfer.Account_To);
+            Account accountFrom = accountDao.GetAccountIdByUserId(transfer.Account_From); // converts both user ids to both account ids 
             transfer.Account_To = account.Account_Id;
+            transfer.Account_From = accountFrom.Account_Id; // adding both accounts Ids to transfer objects
             accountDao.UpdateBalanceReceived(transfer);
             Account accountReturned = accountDao.UpdateBalanceSent(transfer, User.Identity.Name);
             Transfer newTransfer = transferDao.InsertNewTransfer(transfer);
