@@ -92,8 +92,8 @@ namespace TenmoClient
             {
                 // Send TE bucks
                 GetUsers();
-
-            Transfer transfer = PromptForUserIdAndAmount("");
+                Console.WriteLine();
+                Transfer transfer = PromptForUserIdAndAmount();
                 tenmoApiService.SendTransfer(transfer);
 
                 
@@ -201,23 +201,93 @@ namespace TenmoClient
         }
 
 
-        private Transfer PromptForUserIdAndAmount(string message)
+        private Transfer PromptForUserIdAndAmount()
         {
 
-            Console.WriteLine($"Id of the User {message}: ");
-            Console.WriteLine();
-            int userId = Convert.ToInt32(Console.ReadLine());
+            //Console.WriteLine($"Id of the User to send funds to: ");
+
+            int userId = console.PromptForInteger("Id of the User to send funds to", int.MinValue, int.MaxValue);
+            
+
+            //int userId = Convert.ToInt32(Console.ReadLine());
+
+            if (userId == tenmoApiService.UserId)
+            {
+                console.PrintError("Cannot send funds to self");
+                console.Pause();
+                return null;    
+                
+            }
+
+           else if (!IsUserInList(userId))
+            {
+                console.PrintError("user not available. PLease enter an existing user.");
+                console.Pause();
+                return null;
+
+            }
+
+
+            
             Console.WriteLine($"Enter the amount to send: ");
             Console.WriteLine();
             decimal amount = Convert.ToDecimal(Console.ReadLine());
+
+               if (amount < 0)
+                {
+                    console.PrintError("Cannot send a nonzero amount.");
+                    console.Pause();
+                    return null;
+                }
+
+               else if(amount > tenmoApiService.GetBalanceByUsername())
+                {
+                    console.PrintError("Cannot send funds greater than current balance.");
+                    console.Pause();
+                    return null;
+
+                }
+
+               else
+                {
+
+               
+
             Transfer transfer = new Transfer();
             transfer.Account_To = userId;
             transfer.Amount = amount;
             transfer.Account_From = tenmoApiService.UserId;
             
-            return transfer; 
+            return transfer;
+
+                }
+
+            }
+
+
+        private bool IsUserInList(int userId)
+        {
+
+           List<ApiUser> currentUsers = tenmoApiService.GetUsers();
+
+            bool isInList = false;
+           
+            foreach (ApiUser user in currentUsers)
+            {
+                if (user.UserId == userId)
+                {
+                    isInList = true;
+
+                }
+
+            }
+
+            return isInList;
+
 
         }
+
+       
 
      
     }
