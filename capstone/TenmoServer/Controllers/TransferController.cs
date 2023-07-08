@@ -21,25 +21,23 @@ namespace TenmoServer.Controllers
             this.accountDao = accountDao;
         }
 
+
         [HttpGet()]
 
-        public ActionResult<List<User>> DisplayUsers()
+        public ActionResult<List<Transfer>> ViewTransfers()
+
+
         {
-            IList<User> users = userDao.GetUsers();
+            User currentUser = userDao.GetUserByUsername(User.Identity.Name);
+
+            string username = currentUser.Username;
+
+            List<Transfer> transfers = transferDao.ViewTransfers(username);
 
 
-            if (users != null)
-            {
-                return Ok(users);
-
-            }
-
-            else
-            {
-                return NotFound();
-
-            }
+            return transfers;
         }
+
 
         [HttpPost()]
 

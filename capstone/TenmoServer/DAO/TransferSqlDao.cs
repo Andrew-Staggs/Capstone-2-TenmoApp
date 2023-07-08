@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Data.SqlClient;
+using TenmoServer.Exceptions;
 using TenmoServer.Models;
 
 namespace TenmoServer.DAO
@@ -21,7 +22,7 @@ namespace TenmoServer.DAO
             string sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
                 "VALUES (2, 2, @account_from, @account_to, @amount)";
 
-            Transfer newTransfer = new Transfer();
+            //Transfer newTransfer = new Transfer();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -31,19 +32,59 @@ namespace TenmoServer.DAO
                     cmd.Parameters.AddWithValue("@account_from", transfer.Account_From);
                     cmd.Parameters.AddWithValue("@account_to", transfer.Account_To);
                     cmd.Parameters.AddWithValue("@amount", transfer.Amount);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        newTransfer = MapRowToTransfer(reader);
-                    }
+                     cmd.ExecuteNonQuery();
 
 
                     return transfer;
                 }
             }
         }
+                
+        public List<Transfer> ViewTransfers(string username)
 
+        {
+
+            string sql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount FROM transfer " +
+                            "JOIN account ON account_id = account_from " +
+                            "JOIN tenmo_user ON tenmo_user.user_id = account.user_id " +
+                            "WHERE username = @username; ";
+
+            List<Transfer> transfers = new List<Transfer>();
+            try
+            {
+                
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Transfer transfer = new Transfer();
+                       
+                         transfer = MapRowToTransfer(reader);
+                        transfers.Add(transfer);
+                        
+                    }
+
+                  
+                }
+                return transfers;
+
+
+            }
+
+
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+
+
+        }
 
 
                 // create method to add row to table. Called 
@@ -51,12 +92,13 @@ namespace TenmoServer.DAO
                 {
                     Transfer transfer = new Transfer();
 
-                    transfer.Transfer_Id = Convert.ToInt32("transfer_id");
-                    transfer.Account_From = Convert.ToInt32("account_from");
-                    transfer.Account_To = Convert.ToInt32("account_to");
-                    transfer.Amount = Convert.ToDecimal("amount");
-                    transfer.Transfer_Type_Id = Convert.ToInt32("transfer_type_id");
-                    transfer.Transfer_Status_Id = Convert.ToInt32("transfer_status_id");
+                   
+                    transfer.Transfer_Id = Convert.ToInt32(reader["transfer_id"]);
+                    transfer.Account_From = Convert.ToInt32(reader["account_from"]);
+                    transfer.Account_To = Convert.ToInt32(reader["account_to"]);
+                    transfer.Amount = Convert.ToDecimal(reader["amount"]);
+                    transfer.Transfer_Type_Id = Convert.ToInt32(reader["transfer_type_id"]);
+                    transfer.Transfer_Status_Id = Convert.ToInt32(reader["transfer_status_id"]);
 
                     return transfer;
                 }
